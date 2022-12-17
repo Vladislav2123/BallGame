@@ -3,14 +3,13 @@ using Zenject;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Threading.Tasks;
-//using MAXHelper;
 
 public class LevelsManager : MonoBehaviour
 {
     [SerializeField] private Transform _levelsParent;
     [SerializeField] private Level[] _levels;
     [SerializeField] private float _restartDelay;
-    //[SerializeField] private bool _fading;
+    [SerializeField] private bool _fading;
 
 #if UNITY_EDITOR
     [Header("=== TESTING ===")]
@@ -19,16 +18,15 @@ public class LevelsManager : MonoBehaviour
 #endif
 
     [Inject] private DiContainer _diContainer;
-    //[Inject] private UIFade _uiFade;
+    [Inject] private UIFade _uiFade;
     private Level _currentLevel;
 
     private const string CURRENT_LEVEL_KEY = "CurrentLevel";
     private const string COMPLETED_LEVELS_KEY = "CompletedLevels";
-    private const string LOOP_NUMBER_KEY = "LoopNumber";
-    private const string ADS_PLACEMENT = "ad_on_restart";
     private const int LOOP_LEVEL = 2;                                   // Level, playing on replay
 
     public static LevelsManager Instance { get; private set; }
+
     public int CompletedLevels
     {
         get => PlayerPrefs.GetInt(COMPLETED_LEVELS_KEY, 1);
@@ -48,11 +46,6 @@ public class LevelsManager : MonoBehaviour
             return _currentLevel;
         }
         private set => _currentLevel = value;
-    }
-    public int LoopNumber
-    {
-        get => PlayerPrefs.GetInt(LOOP_NUMBER_KEY, 1);
-        private set => PlayerPrefs.SetInt(LOOP_NUMBER_KEY, value);
     }
 
     public Level[] Levels => _levels;
@@ -110,11 +103,8 @@ public class LevelsManager : MonoBehaviour
 #endif
 
         if (LevelNumber < _levels.Length) LevelNumber++;
-        else
-        {
-            LevelNumber = LOOP_LEVEL;
-            LoopNumber++;
-        }
+        else LevelNumber = LOOP_LEVEL;
+
         CompletedLevels++;
     }
 
@@ -122,21 +112,15 @@ public class LevelsManager : MonoBehaviour
     {
         Level level = _levels[levelNumber - 1];
         Level = _diContainer.InstantiatePrefab(level, level.transform.position, Quaternion.identity, _levelsParent).GetComponent<Level>();
-        //if (_fading) _uiFade.FadeOut();
+        if (_fading) _uiFade.FadeOut();
     }
     private IEnumerator RestartRoutine(bool showAd)
     {
-        //if (_fading) _uiFade.FadeIn();
+        if (_fading) _uiFade.FadeIn();
 
         yield return new WaitForSeconds(_restartDelay);
 
-        /*if (showAd)
-        {
-            var code = AdsManager.ShowInter(gameObject, RestartScene, ADS_PLACEMENT);
-            if (code != AdsManager.EResultCode.OK) RestartScene();
-        }
-        else*/
-            RestartScene();
+        RestartScene();
     }
 
     private void RestartScene(bool plug = true)
