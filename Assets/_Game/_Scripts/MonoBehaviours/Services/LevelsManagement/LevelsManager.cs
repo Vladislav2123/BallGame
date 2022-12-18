@@ -48,6 +48,8 @@ public class LevelsManager : MonoBehaviour
         private set => _currentLevel = value;
     }
 
+    public bool Restarting { get; private set; }
+
     public Level[] Levels => _levels;
 
     private void Awake()
@@ -81,19 +83,26 @@ public class LevelsManager : MonoBehaviour
     }
     public void LoadNextLevel()
     {
+        if (Restarting) return;
+
         CompleteLevel();
-        RestartLevel(true);
+        RestartLevel();
     }
 
-    public async void RestartLevel(float delay, bool showAd = false)
+    public async void RestartLevel(float delay)
     {
+        if (Restarting) return;
+
         await Task.Delay((int)(delay * 1000));
 
-        RestartLevel(showAd);
+        RestartLevel();
     }
-    public void RestartLevel(bool showAd = false)
+    public void RestartLevel()
     {
-        StartCoroutine(RestartRoutine(showAd));
+        if (Restarting) return;
+
+        Restarting = true;
+        StartCoroutine(RestartRoutine());
     }
 
     private void CompleteLevel()
@@ -110,11 +119,13 @@ public class LevelsManager : MonoBehaviour
 
     private void LoadLevel(int levelNumber)
     {
+        if (Restarting) return;
+             
         Level level = _levels[levelNumber - 1];
         Level = _diContainer.InstantiatePrefab(level, level.transform.position, Quaternion.identity, _levelsParent).GetComponent<Level>();
         if (_fading) _uiFade.FadeOut();
     }
-    private IEnumerator RestartRoutine(bool showAd)
+    private IEnumerator RestartRoutine()
     {
         if (_fading) _uiFade.FadeIn();
 

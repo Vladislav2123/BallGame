@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using Zenject;
 
 public enum GameState
 {
@@ -16,6 +17,11 @@ public class GameStateController : MonoBehaviour
     public event Action OnLoseEvent;
 
     [SerializeField] private GameState _state;
+    [SerializeField] private float _resultShowingDelay;
+
+    [Inject] private LevelDisplay _levelDisplay;
+    [Inject] private WinWindow _winWindow;
+    [Inject] private LoseWindow _loseWindow;
 
     public bool IsPlaying { get; private set; }
     public GameState State
@@ -23,8 +29,6 @@ public class GameStateController : MonoBehaviour
         get => _state;
         set
         {
-            if (value == _state) return;
-
             _state = value;
 
             switch(value)
@@ -84,6 +88,8 @@ public class GameStateController : MonoBehaviour
         if (IsPlaying == false) return;
         EndGame();
 
+        _winWindow.Show(_resultShowingDelay);
+
         OnWinEvent?.Invoke();
     }
 
@@ -93,12 +99,17 @@ public class GameStateController : MonoBehaviour
         if (IsPlaying == false) return;
         EndGame();
 
+        _loseWindow.Show(_resultShowingDelay);
+
         OnLoseEvent?.Invoke();
     }
 
     private void EndGame()
     {
         IsPlaying = false;
+
+        _levelDisplay.TryHide();
+
         OnGameEndedEvent?.Invoke();
     }
 }

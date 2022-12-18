@@ -44,25 +44,23 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        _gameStateController.OnGameStartedEvent += OnGameStated;
+        _gameStateController.OnGameStartedEvent += OnGameStarted;
         _gameStateController.OnGameEndedEvent += OnGameEnded;
+        Character.OnCollisionEvent += LoseGame;
     }
     
     private void OnDisable()
     {
-        _gameStateController.OnGameStartedEvent -= OnGameStated;
+        _gameStateController.OnGameStartedEvent -= OnGameStarted;
         _gameStateController.OnGameEndedEvent -= OnGameEnded;
+        Character.OnCollisionEvent -= LoseGame;
     }
 
 
-    private void Start()
+    private void OnGameStarted()
     {
         CanControlCharacter = true;
-    }
-
-    private void OnGameStated()
-    {
-        CanControlCharacter = true;
+        Debug.Log("GameStarted");
     }
 
     private void OnGameEnded()
@@ -73,5 +71,10 @@ public class PlayerController : MonoBehaviour
     private void TryMoveCharacter()
     {
         if (Character.IsAiming) Character.TryMove();
+    }
+
+    private void LoseGame()
+    {
+        _gameStateController.State = GameState.Lose;
     }
 }

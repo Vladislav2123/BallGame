@@ -5,6 +5,7 @@ using DG.Tweening;
 public class FadeAnimation : CustomAnimation
 {
     [SerializeField] private CanvasGroup _fadeGroup;
+    [SerializeField] [Range(0, 1)] float _originFade;
     [SerializeField] [Range(0, 1)] float _targetFade;
 
     private float _originAlpha;
@@ -17,6 +18,8 @@ public class FadeAnimation : CustomAnimation
     public override void Play(Action callback = null)
     {
         TryKillAndCreateNewSequence();
+
+        _fadeGroup.alpha = _originFade;
 
         Sequence.Append(
             _fadeGroup.DOFade(_targetFade, Properties.Duration)
