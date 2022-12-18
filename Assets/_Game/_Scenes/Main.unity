@@ -135,6 +135,7 @@ GameObject:
   m_Component:
   - component: {fileID: 176310847}
   - component: {fileID: 176310848}
+  - component: {fileID: 176310849}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -170,6 +171,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boundsExpand: 1
+--- !u!114 &176310849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176310846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83baad1984b8c74448e66c08e88f17f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shakingTransform: {fileID: 963194228}
+  _lightShake:
+    _positionShake:
+      _shake: 1
+      _duration: 0.5
+      _vibrato: 10
+      _strength: {x: 1, y: 0, z: 0}
+    _rotationShake:
+      _shake: 0
+      _duration: 0
+      _vibrato: 10
+      _strength: {x: 0, y: 0, z: 0}
+  _mediumShake:
+    _positionShake:
+      _shake: 1
+      _duration: 0.5
+      _vibrato: 10
+      _strength: {x: 2, y: 0, z: 0}
+    _rotationShake:
+      _shake: 0
+      _duration: 0
+      _vibrato: 10
+      _strength: {x: 0, y: 0, z: 0}
+  _heavyShake:
+    _positionShake:
+      _shake: 0
+      _duration: 0.5
+      _vibrato: 10
+      _strength: {x: 1, y: 0, z: 0}
+    _rotationShake:
+      _shake: 1
+      _duration: 0.5
+      _vibrato: 10
+      _strength: {x: 3, y: 0, z: 0}
 --- !u!1 &209456609
 GameObject:
   m_ObjectHideFlags: 0
@@ -1351,8 +1398,8 @@ Camera:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.5882353, g: 0.6627451, b: 1, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1885,12 +1932,12 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2.778163
+      outSlope: 2.778163
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.15111111
     - serializedVersion: 3
       time: 0.5
       value: 1
@@ -1903,16 +1950,16 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: -3.30189
+      outSlope: -3.30189
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.059999943
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  CurveScale: 1
+  CurveScale: 1.5
 --- !u!114 &1272294646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2207,12 +2254,12 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2.778163
+      outSlope: 2.778163
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.15111111
     - serializedVersion: 3
       time: 0.5
       value: 1
@@ -2225,16 +2272,16 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: -3.30189
+      outSlope: -3.30189
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.059999943
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  CurveScale: 1
+  CurveScale: 1.5
 --- !u!114 &1448117593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2900,7 +2947,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9892b8ad113f75428b1f30fb7b223e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sensitivity: 15
+  _sensitivity: 10
 --- !u!1 &1874224775
 GameObject:
   m_ObjectHideFlags: 0
@@ -3139,6 +3186,7 @@ GameObject:
   - component: {fileID: 2026213499}
   - component: {fileID: 2026213498}
   - component: {fileID: 2026213497}
+  - component: {fileID: 2026213500}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -3208,6 +3256,7 @@ MonoBehaviour:
   _monoInstallers:
   - {fileID: 2026213498}
   - {fileID: 2026213497}
+  - {fileID: 2026213500}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -3225,6 +3274,19 @@ MonoBehaviour:
   _parentNewObjectsUnderSceneContext: 0
   _contractNames: []
   _parentContractNames: []
+--- !u!114 &2026213500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026213495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4b8aa0c9d914ab49aa0fb7cded0b0a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _caneraShake: {fileID: 176310849}
 --- !u!1 &2088454064
 GameObject:
   m_ObjectHideFlags: 0

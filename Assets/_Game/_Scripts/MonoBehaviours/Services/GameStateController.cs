@@ -22,6 +22,7 @@ public class GameStateController : MonoBehaviour
     [Inject] private LevelDisplay _levelDisplay;
     [Inject] private WinWindow _winWindow;
     [Inject] private LoseWindow _loseWindow;
+    [Inject] private CameraShake _cameraShake;
 
     public bool IsPlaying { get; private set; }
     public GameState State
@@ -100,6 +101,7 @@ public class GameStateController : MonoBehaviour
         EndGame();
 
         _loseWindow.Show(_resultShowingDelay);
+        _cameraShake.ShakeLight();
 
         OnLoseEvent?.Invoke();
     }

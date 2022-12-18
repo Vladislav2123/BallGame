@@ -11,6 +11,7 @@ public class InputHandler : MonoBehaviour
 
     [Inject] private Canvas _canvas;
     private Vector3 _lastFrameTouchPosition;
+    private Camera _camera;
     private bool _isPressed;
     private bool _isBlocked;
 
@@ -58,8 +59,8 @@ public class InputHandler : MonoBehaviour
             if (IsPressed)
             {
                 _dragDelta = (PointerPosition - OriginPointerPosition) / _canvas.scaleFactor;
-                _dragDelta.x = _dragDelta.x / Screen.height * _canvas.scaleFactor * _sensitivity;
-                _dragDelta.y = _dragDelta.y  / Screen.height * _canvas.scaleFactor * _sensitivity;
+                _dragDelta.x = _dragDelta.x / Screen.height * _canvas.scaleFactor * (_sensitivity * (_camera.orthographicSize / 5));
+                _dragDelta.y = _dragDelta.y  / Screen.height * _canvas.scaleFactor * (_sensitivity * (_camera.orthographicSize / 5));
 
                 return _dragDelta;
             }
@@ -68,6 +69,11 @@ public class InputHandler : MonoBehaviour
     }
 
     public Vector3 UpdateDragDelta { get; private set; }
+
+    private void Awake()
+    {
+        _camera = Camera.main;
+    }
 
     private void Update()
     {
