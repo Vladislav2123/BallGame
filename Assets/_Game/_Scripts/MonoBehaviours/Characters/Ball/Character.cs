@@ -51,7 +51,7 @@ public class Character : MonoBehaviour
 
         Vector3 targetPoint = transform.position + AimDirection * AimLength;
 
-        if (Physics.SphereCast(transform.position, _radius, AimDirection,  out RaycastHit hitInfo, AimLength + _radius, _wallLayer))
+        if (Physics.SphereCast(transform.position, _radius, AimDirection,  out RaycastHit hitInfo, AimLength, _wallLayer))
         {
             targetPoint = transform.position + AimDirection * hitInfo.distance;
             _collision = true;

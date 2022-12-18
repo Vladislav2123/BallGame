@@ -41,7 +41,7 @@ public class LevelsManager : MonoBehaviour
     {
         get
         {
-            if (_currentLevel == null) LoadLevel();
+            if (Time.time > 1 && _currentLevel == null) LoadLevel();
 
             return _currentLevel;
         }

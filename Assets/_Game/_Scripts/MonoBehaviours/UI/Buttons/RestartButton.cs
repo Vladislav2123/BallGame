@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-public class RestartButton : MonoBehaviour
+public class RestartButton : UIPanel
 {
     [Inject] private LevelsManager _levelsManager;
 
